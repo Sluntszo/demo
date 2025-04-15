@@ -1,0 +1,313 @@
+/* Base settings for page and layout */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent page scrolling */
+  background-color: #444; /* Matches the globe's background */
+  font-family: Arial, sans-serif;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+/* Capitalize the first letter of each line */
+.line::first-letter {
+  text-transform: uppercase;
+}
+
+/* Header: Title bar */
+header {
+  flex: 0 0 auto;
+  height: 100px;
+  background-color: #34495E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title {
+  font-size: 2rem; /* Large title font size */
+  font-weight: bold;
+}
+
+/* Main content: left-side poem and right-side globe */
+.main-content {
+  flex: 1 1 auto; /* Occupy remaining space */
+  display: flex;
+}
+
+/* Left panel: increased width for poem display */
+.left-column {
+  width: 450px;
+  background-color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.left-column-content {
+  max-width: 90%;
+  text-align: left;
+}
+/* Subtitle: bold and centered */
+.verse-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.line {
+  margin-bottom: 6px;
+  margin-left: 10px; /* Keep left margin for highlighted text */
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+.line br {
+  display: block;
+  content: "";
+  margin-bottom: 16px; /* 确保与 .line 的行间距一致 */
+}
+
+
+/* Non-highlighted lines have a color close to the background */
+.left-column .line:not(.active-line) {
+  color: #F0F0F0;
+}
+/* Highlight the first line */
+.active-line {
+  background-color: #ddd;
+  color: #000;
+}
+
+/* Right panel: Globe container */
+.right-column {
+  flex: 1; /* Occupies remaining width */
+  position: relative;
+}
+#globeContainer {
+  width: 100%;
+  height: 100%;
+}
+/* Pollution Legend - positioned at the top right */
+.pollution-legend {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
+  border-radius: 4px;
+  z-index: 10;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.legend-item:last-child {
+  margin-bottom: 0;
+}
+.legend-color {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border: 1px solid #fff;
+}
+/* Pollutant Selector - positioned at the top left */
+.pollutant-selector {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
+  border-radius: 4px;
+  z-index: 10;
+}
+/* Info Window - positioned at the bottom left of the globe */
+.info-window {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  padding: 10px;
+  border-radius: 8px;
+  color: #333;
+  font-size: 14px;
+  z-index: 10;
+}
+.info-title {
+  margin-bottom: 5px;
+}
+.info-values span {
+  margin-right: 8px;
+}
+
+/* Footer: Static Previous/Next buttons */
+footer {
+  flex: 0 0 auto;
+  height: 50px;
+  background-color: #34495E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.arrow-button {
+  font-size: 12px;
+  padding: 5px 15px;
+  margin: 0 10px;
+  background-color: #666;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+}
+.arrow-button:hover {
+  background-color: #777;
+}
+#globeContainer {
+  cursor: default;
+}
+
+#resetButton {
+  display: block;
+  margin: 30px auto 10px auto;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #34495E;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+#resetButton:hover {
+  background-color: #1F618D;
+}
+
+#resetButton:active {
+  transform: scale(0.96);
+}
+
+/* Clickable Location */
+.clickable-location {
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: text-shadow 0.3s ease;
+}
+.clickable-location:hover {
+  background-color: rgba(100, 149, 237, 0.7); /* 深一点的蓝色（CornflowerBlue） */
+  text-shadow: 0 0 10px rgba(100, 149, 237, 0.9); /* 同色系光晕 */
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+
+/* 城市污染等级颜色映射 */
+.clickable-location[data-location="Austin"] {
+  color: #ffa500; /* 橙 - AQI 97 */
+}
+.clickable-location[data-location="Pittsburgh"] {
+  color: #ffff00; /* 黄 - AQI 53 */
+}
+.clickable-location[data-location="Beijing"] {
+  color: #ff0000; /* 红 - AQI 151 */
+}
+.clickable-location[data-location="Shanghai"] {
+  color: #ff0000; /* 红 - AQI 156 */
+}
+.clickable-location[data-location="New Delhi"] {
+  color: #ff0000; /* 红 - AQI 500 */
+}
+.clickable-location[data-location="Los Angeles County"] {
+  color: #ffff00; /* 黄 - AQI 93 */
+}
+.clickable-location[data-location="Phoenix"] {
+  color: #ffff00; /* 黄 - AQI 72 */
+}
+.clickable-location[data-location="Kolkata"] {
+  color: #ff0000; /* 红 - AQI 178 */
+}
+.clickable-location[data-location="Mumbai"] {
+  color: #ff0000; /* 红 - AQI 171 */
+}
+.clickable-location[data-location="Patna"] {
+  color: #ff0000; /* 红 - AQI 365 */
+}
+.clickable-location[data-location="Lagos"] {
+  color: #ff0000; /* 红 - AQI 172 */
+}
+.clickable-location[data-location="Johannesburg"] {
+  color: #ffa500; /* 橙 - AQI 121 */
+}
+.clickable-location[data-location="Agadez"] {
+  color: #ff0000; /* 红 - AQI 152 */
+}
+
+/* Styles for the detailed information popup */
+.detailed-info-popup {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #444;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  width: 300px; /* Adjust as needed */
+}
+.detailed-info-popup .popup-content {
+  display: flex;
+  flex-direction: column;
+}
+.detailed-info-popup .popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.detailed-info-popup .popup-header .popup-buttons button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.detailed-info-popup .popup-body p {
+  margin: 5px 0;
+}
+
+.popup-body p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0;
+}
+
+/* Optionally, force the pollutant value to a minimum width */
+.popup-body p span.value {
+  min-width: 50px; /* adjust as needed */
+  text-align: right;
+}
+
+.pollutant-dot {
+  font-size: 1em; /* or adjust as needed */
+}
+
+.chart-title {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold;
+}

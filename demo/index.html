@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pollution Geographies (2023)</title>
+  <!-- Import ECharts and ECharts-GL libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<!-- Header title -->
+<header>
+  <div class="title">Pollution Geographies (2023)</div>
+</header>
+
+<!-- Main area: left poem panel and right globe panel -->
+<div class="main-content">
+  <!-- Left panel: Display one stanza at a time -->
+  <div class="left-column">
+    <div class="left-column-content" id="poemContainer">
+      <div class="verse" id="verse-0">
+        <div class="verse-title">I. NO₂ Sonata (USA vs China)</div>
+        <p class="line active-line" data-default-city="Austin">One crimson fissure gnaws at <span class="clickable-location" data-location="Austin">Texas</span> shale—<span class="pollutant-tag" data-pollutant="NO2" style="display: none;"></span></p>
+        <p class="line" data-default-city="Pittsburgh">America's solo nitrogen psalm trembling <br>through fracking hymns. Across the dateline,</p>
+        <p class="line" data-default-city="Beijing">four rusted obelisks mark <span class="clickable-location" data-location="Beijing">Beijing's</span> exhalation:<br>factory choirs gargling sulfuric vibrato,<br>each smokestack quartering the sky's aorta.<span class="pollutant-tag" data-pollutant="PM2.5" style="display: none;"></span></p>
+      </div>
+      <div class="verse" id="verse-1" style="display: none">
+        <div class="verse-title">II. Ozone Gradients (Hemispheric Fugue)</div>
+        <p class="line" data-default-city="Shanghai"><span class="clickable-location" data-location="Shanghai">Shanghai</span> coughs into the "very unhealthy" red,<br> her children's UV shields sold in black markets.<span class="pollutant-tag" data-pollutant="O3" style="display: none;"></span></p>
+        <p class="line" data-default-city="New Delhi"><span class="clickable-location" data-location="New Delhi">Delhi's</span> smog octave crushes sarangi strings—<br>a rickshaw driver's ballad now sung in bronchial.<span class="pollutant-tag" data-pollutant="PM2.5" style="display: none;"></span></p>
+        <p class="line" data-default-city="Los Angeles County"><span class="clickable-location" data-location="Los Angeles County">California's</span> "moderate" blooms like alibi jasmine,</p>
+        <p class="line" data-default-city="Phoenix">while <span class="clickable-location" data-location="Phoenix">Phoenix</span> nurses an ozone lesion<br>wider than the Grand Canyon's absent breath.<span class="pollutant-tag" data-pollutant="O3" style="display: none;"></span></p>
+      </div>
+      <div class="verse" id="verse-2" style="display: none">
+        <div class="verse-title">III. PM2.5 Monsoon (Indian Subcontinent)</div>
+        <p class="line" data-default-city="Kolkata"><span class="clickable-location" data-location="Kolkata">Kolkata's</span> air index hits 497 µg/m³—<br>gilded particles dance the Kathakali of suffocation.<span class="pollutant-tag" data-pollutant="PM2.5" style="display: none;"></span></p>
+        <p class="line" data-default-city="Mumbai"><span class="clickable-location" data-location="Mumbai">Mumbai</span> commuters swallow monsoons whole,<br>each raindrop pregnant with 8.5 microns of history.<span class="pollutant-tag" data-pollutant="PM2.5" style="display: none;"></span></p>
+        <p class="line" data-default-city="Patna">The Ganges chokes on devotional microplastics,<br>its sacred foam now a lung surfactant.</p>
+      </div>
+      <div class="verse" id="verse-3" style="display: none">
+        <div class="verse-title">IV. Africa's Particulate Borders</div>
+        <p class="line" data-default-city="Lagos"><span class="clickable-location" data-location="Lagos">Lagos</span> mothers bake akara in "unhealthy" amber—<br>PM2.5 crusts shimmer like stolen crude oil.<span class="pollutant-tag" data-pollutant="PM2.5" style="display: none;"></span></p>
+        <p class="line" data-default-city="Johannesburg"><span class="clickable-location" data-location="Johannesburg">Johannesburg</span> miners hawk "moderate" as sacrament,<br>their chest X-rays bartered for clean air futures.<span class="pollutant-tag" data-pollutant="O3" style="display: none;"></span></p>
+        <p class="line" data-default-city="Agadez">Sahara's harmattan carries EU-dumped nitrate gifts,<br>a sandstorm's CVS receipt tallies bronchiolar debt.</p>
+      </div>
+      <div class="verse" id="verse-4" style="display: none">
+        <div class="verse-title">V. Epilogue: Children's Geography Lesson</div>
+        <p class="line">"Here, class, is where the atmosphere split:<br>Four Chinese smokestacks, one Texan wound,<br>Indian lungs mortgaged to British coal ghosts,<br>African horizons pawned for Dutch rainmakers.</p>
+        <p class="line">Color the 'very unhealthy' zones with crayon tears—<br>this is how we map the arithmetic of breath."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel: Globe component, Pollutant Selector, Legend, and Info Window -->
+  <div class="right-column">
+    <!-- Chart Title: Positioned at the top center of the globe -->
+    <div id="chartTitle" class="chart-title">Global Pollutant Tracker -- AQI</div>
+    <!-- Pollutant type selector (Top Left) -->
+    <div id="pollutantSelector" class="pollutant-selector">
+      <label for="pollutantSelect">Select Pollutant:</label>
+      <select id="pollutantSelect">
+        <option value="AQI">AQI</option>
+        <option value="NO2" selected>NO2</option>
+        <option value="O3">O3</option>
+        <option value="CO2">CO2</option>
+        <option value="PM2.5">PM2.5</option>
+      </select>
+    </div>
+    <!-- Pollution legend (Top Right) -->
+    <div id="pollutionLegend" class="pollution-legend">
+      <div class="legend-item">
+        <span class="legend-color" style="background-color: green;"></span>
+        <span class="legend-label">Good</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color" style="background-color: yellow;"></span>
+        <span class="legend-label">Moderate</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color" style="background-color: orange;"></span>
+        <span class="legend-label">Unhealthy for Sensitive Groups</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color" style="background-color: red;"></span>
+        <span class="legend-label">Unhealthy</span>
+      </div>
+    </div>
+    <!-- Globe container -->
+    <div id="globeContainer"></div>
+    <!-- Info Window (Bottom Left) -->
+    <div id="infoWindow" class="info-window">
+      <div class="info-title">
+        <span class="info-country"><strong>USA</strong></span>,
+        <span class="info-city">New York City</span>
+      </div>
+      <div class="info-values">
+        <span><strong>AQI: </strong><span class="value-aqi">75</span></span> |
+        <span><strong>CO2: </strong><span class="value-co">1.2</span></span> |
+        <span><strong>O3: </strong><span class="value-ozone">60</span></span> |
+        <span><strong>NO2: </strong><span class="value-no2">40</span></span> |
+        <span><strong>PM 2.5: </strong><span class="value-pm25">35</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer: Static navigation buttons -->
+<footer>
+  <button id="prevButton" class="arrow-button" onclick="changeVerse(-1)">← Previous</button>
+  <button id="nextButton" class="arrow-button" onclick="changeVerse(1)">Next →</button>
+</footer>
+
+<!-- Link to external JS file -->
+
+<script>
+  let currentVerse = 0;
+  let currentLine = 0;
+
+  const totalVerses = 5;
+  const nextButton = document.querySelector('button.arrow-button[onclick*="changeVerse(1)"]');
+
+  function changeVerse(direction) {
+    // If at the very start and clicking "Previous", do nothing.
+    if (currentVerse === 0 && currentLine === 0 && direction === -1) {
+      return;
+    }
+
+    // Get the current verse and its lines.
+    const current = document.getElementById(`verse-${currentVerse}`);
+    const lines = current.querySelectorAll('.line');
+
+    // Remove highlight from the current line.
+    lines[currentLine].classList.remove('active-line');
+
+    // This variable will store the new active line element.
+    let newActiveLine = null;
+
+    if (direction === 1) {
+      // Moving forward
+      currentLine++;
+      if (currentLine >= lines.length) {
+        // At end of current verse
+        if (currentVerse === totalVerses - 1) {
+          // Last verse: just stay at the last line.
+          currentLine = lines.length - 1;
+          newActiveLine = lines[currentLine];
+        } else {
+          // Move to next verse.
+          current.style.display = 'none';
+          currentVerse++;
+          currentLine = 0;
+          const next = document.getElementById(`verse-${currentVerse}`);
+          next.style.display = 'block';
+
+          // If this is the final verse, show the reset button.
+          if (currentVerse === totalVerses - 1) {
+            showResetButton(next);
+          }
+          // Get the new active line from the next verse.
+          newActiveLine = next.querySelectorAll('.line')[currentLine];
+        }
+      } else {
+        // Within the same verse.
+        newActiveLine = lines[currentLine];
+      }
+    } else if (direction === -1) {
+      // Moving backwards
+      currentLine--;
+      if (currentLine < 0) {
+        // Need to move to the previous verse.
+        current.style.display = 'none';
+        currentVerse = (currentVerse - 1 + totalVerses) % totalVerses;
+        const prev = document.getElementById(`verse-${currentVerse}`);
+        prev.style.display = 'block';
+
+        // When leaving the last verse, hide the reset button.
+        if (currentVerse !== totalVerses - 1) {
+          hideResetButton();
+          nextButton.disabled = false;
+        }
+        const prevLines = prev.querySelectorAll('.line');
+        currentLine = prevLines.length - 1;
+        newActiveLine = prevLines[currentLine];
+      } else {
+        // Still in the same verse.
+        newActiveLine = lines[currentLine];
+      }
+    }
+
+    // Highlight the new active line.
+    newActiveLine.classList.add('active-line');
+  }
+
+  function showResetButton(container) {
+    if (!document.getElementById('resetButton')) {
+      const btn = document.createElement('button');
+      btn.id = 'resetButton';
+      btn.innerText = 'Go Back to Beginning';
+      btn.onclick = () => {
+        // Reset all states
+        document.getElementById(`verse-${currentVerse}`).style.display = 'none';
+        hideResetButton();
+        nextButton.disabled = false;
+        currentVerse = 0;
+        currentLine = 0;
+        const first = document.getElementById('verse-0');
+        first.style.display = 'block';
+        first.querySelectorAll('.line')[0].classList.add('active-line');
+      };
+      btn.style.marginTop = '20px';
+      container.appendChild(btn);
+    }
+  }
+
+  function hideResetButton() {
+    const btn = document.getElementById('resetButton');
+    if (btn) btn.remove();
+  }
+
+  // Initialize the first line on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    const firstLine = document.querySelector('#verse-0 .line');
+    if (firstLine) firstLine.classList.add('active-line');
+  });
+</script>
+
+<!-- Detailed Info Popup (hidden by default) -->
+<div id="detailedInfoPopup" class="detailed-info-popup" style="display: none;">
+  <div class="popup-content">
+    <div class="popup-header">
+      <span id="popupTitle"><strong>Location Info</strong></span>
+      <div class="popup-buttons">
+<!--        <button id="hidePopupBtn">[Hide]</button>-->
+        <button id="closePopupBtn">[Close]</button>
+      </div>
+    </div>
+    <div class="popup-body">
+      <p><strong>Country:</strong> <span id="popupCountry"></span></p>
+      <p><strong>City/District:</strong> <span id="popupCity"></span></p>
+      <p><strong>Air Quality Index:</strong> <span id="popupAQI" class="value"></span></p>
+      <p><strong>CO2:</strong> <span id="popupCO2" class="value"></span></p>
+      <p><strong>O3:</strong> <span id="popupO3" class="value"></span></p>
+      <p><strong>NO2:</strong> <span id="popupNO2" class="value"></span></p>
+      <p><strong>PM2.5:</strong> <span id="popupPM25" class="value"></span></p>
+    </div>
+  </div>
+</div>
+
+<!-- Open Info Window Button (hidden by default) -->
+<button id="openInfoWindowBtn" style="display:none; position:absolute; top:50px; left:10px; z-index:20;">Open Info Window</button>
+
+</body>
+<script src="main.js"></script>
+</html>

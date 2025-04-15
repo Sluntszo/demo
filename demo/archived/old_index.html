@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pollution Geographies</title>
+    <!-- Import ECharts and ECharts-GL libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+    <style>
+        /* Base settings for page and layout */
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent page scrolling */
+            background-color: #444; /* Matches the globe's background */
+            font-family: Arial, sans-serif;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Capitalize the first letter of each line */
+        .line::first-letter {
+            text-transform: uppercase;
+        }
+
+        /* Header: Title bar */
+        header {
+            flex: 0 0 auto;
+            height: 100px;
+            background-color: #34495E;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .title {
+            font-size: 2rem; /* Large title font size */
+            font-weight: bold;
+        }
+
+        /* Main content: left-side poem and right-side globe */
+        .main-content {
+            flex: 1 1 auto; /* Occupy remaining space */
+            display: flex;
+        }
+
+        /* Left panel: increased width for poem display */
+        .left-column {
+            width: 450px;
+            background-color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .left-column-content {
+            max-width: 90%;
+            text-align: left;
+        }
+        /* Subtitle: bold and centered */
+        .verse-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .line {
+            margin-bottom: 6px;
+            margin-left: 10px; /* Keep left margin for highlighted text */
+            line-height: 1.6;
+        }
+        /* Non-highlighted lines have a color close to the background */
+        .left-column .line:not(.active-line) {
+            color: #F0F0F0;
+        }
+        /* Highlight the first line */
+        .active-line {
+            background-color: #ddd;
+            color: #000;
+        }
+
+        /* Right panel: Globe container */
+        .right-column {
+            flex: 1; /* Occupies remaining width */
+            position: relative;
+        }
+        #globeContainer {
+            width: 100%;
+            height: 100%;
+        }
+        /* Pollution Legend - positioned at the top right */
+        .pollution-legend {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 4px;
+            z-index: 10;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .legend-item:last-child {
+            margin-bottom: 0;
+        }
+        .legend-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border: 1px solid #fff;
+        }
+        /* Pollutant Selector - positioned at the top left */
+        .pollutant-selector {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 4px;
+            z-index: 10;
+        }
+        /* Footer: Static Previous/Next buttons */
+        footer {
+            flex: 0 0 auto;
+            height: 50px;
+            background-color: #34495E;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        .arrow-button {
+            font-size: 12px;
+            padding: 5px 15px;
+            margin: 0 10px;
+            background-color: #666;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #fff;
+        }
+        .arrow-button:hover {
+            background-color: #777;
+        }
+    </style>
+</head>
+<body>
+<!-- Header title -->
+<header>
+    <div class="title">Pollution Geographies</div>
+</header>
+
+<!-- Main area: left poem panel and right globe panel -->
+<div class="main-content">
+    <!-- Left panel: Display the first stanza of the poem -->
+    <div class="left-column">
+        <div class="left-column-content">
+            <div class="verse-title">I. NO2 Sonata (USA vs China)</div>
+            <p class="line active-line">One crimson fuselage gnats at Texas shale—</p>
+            <p class="line">Americana lags behind the serpentine Asian dragon,</p>
+            <p class="line">four rusted beehives mark Beijing’s exaltation:</p>
+            <p class="line">factory rejects disgorging matter into heaven,</p>
+            <p class="line">each smokestack quartering the sky’s aorta.</p>
+        </div>
+    </div>
+
+    <!-- Right panel: Globe component, Pollutant Selector, and Legend fills remaining space -->
+    <div class="right-column">
+        <!-- Pollutant type selector (Top Left) -->
+        <div id="pollutantSelector" class="pollutant-selector">
+            <label for="pollutantSelect">Select Pollutant:</label>
+            <select id="pollutantSelect">
+                <option value="NO2">NO2</option>
+                <option value="O3">O3</option>
+                <option value="CO2">CO2</option>
+            </select>
+        </div>
+        <!-- Pollution legend (Top Right) -->
+        <div id="pollutionLegend" class="pollution-legend">
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: green;"></span>
+                <span class="legend-label">Good</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: yellow;"></span>
+                <span class="legend-label">Moderate</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: orange;"></span>
+                <span class="legend-label">Unhealthy for Sensitive Groups</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: red;"></span>
+                <span class="legend-label">Unhealthy</span>
+            </div>
+        </div>
+        <!-- Globe container -->
+        <div id="globeContainer"></div>
+    </div>
+</div>
+
+<!-- Footer: Static navigation buttons -->
+<footer>
+    <button class="arrow-button">← Previous</button>
+    <button class="arrow-button">Next →</button>
+</footer>
+
+<!-- ECharts Globe initialization script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize the ECharts instance for the globe
+        var globeChart = echarts.init(document.getElementById('globeContainer'));
+
+        // Fetch CSV data
+        fetch('../data/processed_data/final_data.csv')
+            .then(response => response.text())
+            .then(csvText => {
+                const lines = csvText.split('\n');
+                // Header Information
+                const header = lines[0].split(',');
+                let pollutionData = [];
+
+                // Parse fields from CSV
+                for (let i = 1; i < lines.length; i++) {
+                    const row = lines[i].split(',');
+                    // Basic validation: skip if not enough columns
+                    //if (row.length < 14) continue;
+                    // Extract relevant columns (indices based on your CSV header order)
+                    const city = row[1];
+                    const aqiValue = parseFloat(row[2]);
+                    const lat = parseFloat(row[12]);
+                    const lng = parseFloat(row[13]);
+
+                    // Skip if lat/lng invalid
+                    //if (isNaN(lat) || isNaN(lng)) continue;
+
+                    // Assign Level and color range based on AQI value
+                    let level = 1;
+                        if (aqiValue > 50 && aqiValue <= 100) level = 2;
+                        else if (aqiValue > 100 && aqiValue <= 150) level = 3;
+                        else if (aqiValue > 150) level = 4;
+
+                    // ECharts expects [longitude, latitude, altitude]:
+                    pollutionData.push({
+                        name: city,
+                        value: [lng, lat, 0],
+                        level: level
+                    });
+                }
+
+                const option = {
+                    backgroundColor: '#444',  // Matches the page background
+                    globe: {
+                        // Base texture for the Earth (colored image)
+                        baseTexture: '../picture/earth_bright.jpg',
+                        // Optional height texture (left empty)
+                        heightTexture: '',
+                        // Background image for starfield; high-res panoramic images are recommended
+                        environment: '../picture/starfield.jpg',
+                        shading: 'color',  // Use uniform color shading to remove day-night effects
+                        viewControl: {
+                            autoRotate: false,          // Disable auto-rotation
+                            enableRotate: false,        // Disable manual rotation
+                            targetCoord: [-95, 38]       // Center the view on the USA (approximate center)
+                        }
+                        // Removed dynamic lighting properties to avoid brightness changes
+                    },
+                    series: [
+                        {
+                            name: 'Pollution Points',
+                            type: 'scatter3D',
+                            coordinateSystem: 'globe',
+                            symbolSize: 8,
+                            // Determine point color based on a custom 'level' attribute
+                            itemStyle: {
+                                color: function (param) {
+                                    var lvl = param.data.level;
+                                    if (lvl === 1) {
+                                        return 'green';
+                                    } else if (lvl === 2) {
+                                        return 'yellow';
+                                    } else if (lvl === 3) {
+                                        return 'orange';
+                                    } else {
+                                        return 'red';
+                                    }
+                                },
+                                opacity: 0.9
+                            },
+                            data: pollutionData
+                        }
+                    ]
+                };
+                globeChart.setOption(option);
+            });
+        // **TODO** : Add event listeners for the pollutant selector
+    });
+</script>
+
+</body>
+</html>

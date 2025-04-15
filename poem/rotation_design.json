@@ -1,0 +1,135 @@
+[
+  {
+    "id": 1,
+    "lines": ["One crimson fissure gnaws at Texas shale—"],
+    "location": "Texas, USA",
+    "pollutant": "AQI"
+  },
+  {
+    "id": 2,
+    "lines": [
+      "America's solo nitrogen psalm trembling",
+      "through fracking hymns."
+    ],
+    "location": "Appalachia & shale basins, USA",
+    "pollutant": "NO2"
+  },
+  {
+    "id": 3,
+    "lines": [
+      "four rusted obelisks mark Beijing's exhalation:",
+      "factory choirs gargling sulfuric vibrato,",
+      "each smokestack quartering the sky's aorta."
+    ],
+    "location": "Beijing, China",
+    "pollutant": "NO2"
+  },
+  {
+    "id": 4,
+    "lines": [
+      "Shanghai coughs into the ‘very unhealthy’ violet,",
+      "her children's UV shields sold in black markets."
+    ],
+    "location": "Shanghai, China",
+    "pollutant": "O3"
+  },
+  {
+    "id": 5,
+    "lines": [
+      "Delhi's smog octave crushes sarangi strings—",
+      "a rickshaw driver’s ballad now sung in bronchial."
+    ],
+    "location": "Delhi, India",
+    "pollutant": "PM2.5"
+  },
+  {
+    "id": 6,
+    "lines": ["California's ‘moderate’ blooms like alibi jasmine,"],
+    "location": "California, USA",
+    "pollutant": "AQI"
+  },
+  {
+    "id": 7,
+    "lines": [
+      "while Phoenix AZ nurses an ozone lesion",
+      "wider than the Grand Canyon's absent breath."
+    ],
+    "location": "Phoenix, Arizona, USA",
+    "pollutant": "O3"
+  },
+  {
+    "id": 8,
+    "lines": [
+      "Kolkata's air index hits 497 µg/m³—",
+      "gilded particles dance the Kathakali of suffocation."
+    ],
+    "location": "Kolkata, India",
+    "pollutant": "PM2.5"
+  },
+  {
+    "id": 9,
+    "lines": [
+      "Mumbai commuters swallow monsoons whole,",
+      "each raindrop pregnant with 8.5 microns of history."
+    ],
+    "location": "Mumbai, India",
+    "pollutant": "CO2"
+  },
+  {
+    "id": 10,
+    "lines": [
+      "The Ganges chokes on devotional microplastics,",
+      "its sacred foam now a lung surfactant."
+    ],
+    "location": "Ganges River, India",
+    "pollutant": "AQI"
+  },
+  {
+    "id": 11,
+    "lines": [
+      "Lagos mothers bake akara in ‘unhealthy’ amber—",
+      "PM2.5 crusts shimmer like stolen crude oil."
+    ],
+    "location": "Lagos, Nigeria",
+    "pollutant": "PM2.5"
+  },
+  {
+    "id": 12,
+    "lines": [
+      "Johannesburg miners hawk ‘moderate’ as sacrament,",
+      "their chest X-rays bartered for clean air futures."
+    ],
+    "location": "Johannesburg, South Africa",
+    "pollutant": "AQI"
+  },
+  {
+    "id": 13,
+    "lines": [
+      "Sahara's harmattan carries EU-dumped nitrate gifts,",
+      "a sandstorm's CVS receipt tallies bronchiolar debt."
+    ],
+    "location": "Sahara Desert + Sahel",
+    "pollutant": "CO2"
+  },
+  {
+    "id": 14,
+    "lines": [
+      "Here, class, is where the atmosphere split:",
+      "Four Chinese smokestacks, one Texan wound,",
+      "Indian lungs mortgaged to British coal ghosts,",
+      "African horizons pawned for Dutch rainmakers."
+    ],
+    "location": "Global Composite",
+    "pollutant": "ALL"
+  },
+
+  {
+    "id": 15,
+    "lines": [
+      "Color the ‘very unhealthy’ zones with crayon tears—",
+      "this is how we map the arithmetic of breath."
+    ],
+    "location": "Imagined Earth (Crayon Style)",
+    "pollutant": "NONE"
+  }
+]
