@@ -470,16 +470,32 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function getColorForPollutant(pollutant, value) {
-    if (pollutant === 'AQI') {
+    if (pollutant === "AQI") {
       if (value <= 50) return 'green';
       else if (value <= 100) return 'yellow';
       else if (value <= 150) return 'orange';
       else return 'red';
+    } else if (pollutant === "NO2") {
+      if (value < 10) return 'green';
+      else if (value < 30) return 'yellow';
+      else if (value < 50) return 'orange';
+      else return 'red';
+    } else if (pollutant === "O3") {
+      if (value < 50) return 'green';
+      else if (value < 100) return 'yellow';
+      else if (value < 150) return 'orange';
+      else return 'red';
+    } else if (pollutant === "CO") {
+      if (value < 5) return 'green';
+      else if (value < 15) return 'yellow';
+      else if (value < 30) return 'orange';
+      else return 'red';
+    } else if (pollutant === "PM2.5") {
+      if (value < 50) return 'green';
+      else if (value < 100) return 'yellow';
+      else if (value < 150) return 'orange';
+      else return 'red';
     }
-    if (value < 40) return 'green';
-    else if (value < 80) return 'yellow';
-    else if (value < 120) return 'orange';
-    else return 'red';
   }
 
   // Popup Event Handler for "Close" button only.
