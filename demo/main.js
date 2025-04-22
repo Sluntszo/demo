@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function () {
       infoWindow.querySelector('.value-aqi').textContent = data.no2;
     } else if (pollutant === "O3") {
       infoWindow.querySelector('.value-aqi').textContent = data.ozone;
-    } else if (pollutant === "CO2") {
+    } else if (pollutant === "CO") {
       infoWindow.querySelector('.value-aqi').textContent = data.co;
     } else if (pollutant === "PM2.5") {
       infoWindow.querySelector('.value-aqi').textContent = data.pm25;
@@ -383,9 +383,9 @@ document.addEventListener('DOMContentLoaded', function () {
       return function(param) {
         if (param.data.clicked) return 'black';
         let value = param.data.no2;
-        if (value < 1) return 'green';
-        else if (value < 2) return 'yellow';
-        else if (value < 3) return 'orange';
+        if (value < 10) return 'green';
+        else if (value < 30) return 'yellow';
+        else if (value < 50) return 'orange';
         else return 'red';
       };
     } else if (pollutant === "O3") {
@@ -397,13 +397,13 @@ document.addEventListener('DOMContentLoaded', function () {
         else if (value < 150) return 'orange';
         else return 'red';
       };
-    } else if (pollutant === "CO2") {
+    } else if (pollutant === "CO") {
       return function(param) {
         if (param.data.clicked) return 'black';
         let value = param.data.co;
-        if (value < 1) return 'green';
-        else if (value < 2) return 'yellow';
-        else if (value < 3) return 'orange';
+        if (value < 5) return 'green';
+        else if (value < 15) return 'yellow';
+        else if (value < 30) return 'orange';
         else return 'red';
       };
     } else if (pollutant === "PM2.5") {
@@ -457,7 +457,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('popupCountry').textContent = data.country;
     document.getElementById('popupCity').textContent = data.city;
     updatePollutantField('popupAQI', data.aqi, 'AQI');
-    updatePollutantField('popupCO2', data.co, 'CO2');
+    updatePollutantField('popupCO', data.co, 'CO');
     updatePollutantField('popupO3', data.ozone, 'O3');
     updatePollutantField('popupNO2', data.no2, 'NO2');
     updatePollutantField('popupPM25', data.pm25, 'PM2.5');
